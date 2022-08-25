@@ -1,0 +1,243 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+
+
+    public static void main(String[] args) {
+
+        Scanner s = new Scanner(System.in);
+
+        char[][] array = {{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+        }
+
+
+        boolean gameOver = false;
+        boolean playAgain = true;
+
+        player1(array);
+        computer(array);
+        gameOver(array);
+
+
+    }
+
+
+    public static void printBoard () {
+        char[][] array = {{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i].length);
+        }
+    }
+
+
+    public static void player1(char[][] array) {
+        int lineplayer1;
+        int columnPlayer1;
+
+        Scanner s = new Scanner(System.in);
+
+        do {
+            System.out.println("Player1 choose place line: ");
+            lineplayer1 = s.nextInt();
+
+            System.out.println("Player1 choose place column: ");
+            columnPlayer1 = s.nextInt();
+
+            if (array[lineplayer1][columnPlayer1] == '0' ||array[lineplayer1][columnPlayer1] == 'X') {
+                System.out.println("choose again!");
+                System.out.println("Player1 choose place line: ");
+                lineplayer1 = s.nextInt();
+                System.out.println("Player1 choose place column: ");
+                columnPlayer1 = s.nextInt();
+                array[lineplayer1][columnPlayer1] = 'X';
+                break;
+            }
+
+        } while (lineplayer1 > 2 && columnPlayer1 > 2);
+        array[lineplayer1][columnPlayer1] = 'X';
+
+        //print
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+        }
+
+
+       while (gameOver(array)) {
+           break;
+       }
+        computer(array);
+
+    }
+
+
+
+    private static void computer(char[][] array) {
+        Random computer1 = new Random();
+        int lineComputer;
+        int columnComputer;
+//  array [0]/[1]/[2]
+        System.out.println("Computer choose place line: ");
+        lineComputer = computer1.nextInt(2);
+        System.out.println(lineComputer);
+//  array [0] - 1/2/3    /array[1] - 1/2/3    /array[2] - 1/2/3
+        System.out.println("Computer choose place column: ");
+        columnComputer = computer1.nextInt(2);
+        System.out.println(columnComputer);
+
+
+        //check if x not exist
+
+        if (array[lineComputer][columnComputer] == 'X' || array[lineComputer][columnComputer] == '0') {
+            do {
+                System.out.println("Choose again !");
+                System.out.println("Computer choose place line: ");
+                lineComputer = computer1.nextInt(2);
+                System.out.println(lineComputer);
+//  array [0] - 1/2/3    /array[1] - 1/2/3    /array[2] - 1/2/3
+                System.out.println("Computer choose place column: ");
+                columnComputer = computer1.nextInt(2);
+                System.out.println(columnComputer);
+                if (array[lineComputer][columnComputer] == '0') {
+                    break;
+                }
+
+            } while (array[lineComputer][columnComputer] != '_');
+        }
+        if (array[lineComputer][columnComputer] == '_') {
+            array[lineComputer][columnComputer] = '0';
+        }
+
+        while (gameOver(array)) {
+            break;
+        }
+
+        printMatrix(array);
+
+        player1(array);
+
+
+    }
+
+
+    public static void printMatrix(char[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+
+
+
+    public static boolean gameOver(char[][] array) {
+        if (array[0][0] == 'X' && array[0][1] == 'X' && array[0][2] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[1][0] == 'X' && array[1][1] == 'X' && array[1][2] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[2][0] == 'X' && array[2][1] == 'X' && array[2][2] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][0] == 'X' && array[1][0] == 'X' && array[2][0] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][1] == 'X' && array[1][1] == 'X' && array[2][1] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][2] == 'X' && array[1][2] == 'X' && array[2][2] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][0] == 'X' && array[1][1] == 'X' && array[2][2] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][2] == 'X' && array[1][1] == 'X' && array[2][0] == 'X') {
+            System.out.println("Player is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+
+
+        if (array[0][0] == '0' && array[0][1] == '0' && array[0][2] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[1][0] == '0' && array[1][1] == '0' && array[1][2] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[2][0] == '0' && array[2][1] == '0' && array[2][2] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][0] == '0' && array[1][0] == '0' && array[2][0] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][1] == '0' && array[1][1] == '0' && array[2][1] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][2] == '0' && array[1][2] == '0' && array[2][2] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][0] == '0' && array[1][1] == '0' && array[2][2] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+            return true;
+        }
+        if (array[0][2] == '0' && array[1][1] == '0' && array[2][0] == '0') {
+            System.out.println("Computer is won !");
+            wannaPlayAgain(array);
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public static void wannaPlayAgain (char[][]array) {
+        System.out.println("Do you want to play again?");
+        Scanner s = new Scanner(System.in);
+        String answer = s.nextLine();
+
+        if (answer.equals("yes")) {
+            System.out.println("OK, Let's play again !");
+            printBoard();
+            player1(array);
+            computer(array);
+            gameOver(array);
+        } else if (answer.equals("no")) {
+            System.out.println("GoodBye");
+        }
+    }
+
+
+}
